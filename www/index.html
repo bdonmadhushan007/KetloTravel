@@ -5,128 +5,55 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <title>KETLO TRAVEL | Sri Lanka 3D Tourism & Admin Portal</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Firebase Compat SDKs (Works reliably inside Android APK WebView) -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
     :root {
       --bg-studio: #eef2f7;
       --surface-3d: linear-gradient(145deg, #ffffff, #e6ecf5);
-      --shadow-3d-lg: 14px 14px 28px #cfd7e3, -14px -14px 28px #ffffff, inset 0 1px 1px rgba(255,255,255,0.9);
-      --shadow-3d-md: 8px 8px 18px #d1d9e6, -8px -8px 18px #ffffff, inset 0 1px 1px rgba(255,255,255,0.85);
-      --shadow-3d-inset: inset 5px 5px 10px #d3dbe7, inset -5px -5px 10px #ffffff;
+      --shadow-3d-lg: 12px 12px 24px #cfd7e3, -12px -12px 24px #ffffff, inset 0 1px 1px rgba(255,255,255,0.9);
+      --shadow-3d-md: 8px 8px 16px #d1d9e6, -8px -8px 16px #ffffff, inset 0 1px 1px rgba(255,255,255,0.85);
+      --shadow-3d-inset: inset 4px 4px 8px #d3dbe7, inset -4px -4px 8px #ffffff;
       --iridescent-grad: linear-gradient(135deg, #f59e0b 0%, #ec4899 35%, #8b5cf6 70%, #0284c7 100%);
     }
-
-    body {
-      font-family: 'Plus Jakarta Sans', sans-serif;
-      background-color: var(--bg-studio);
-      color: #1e293b;
-      overflow-x: hidden;
-      -webkit-tap-highlight-color: transparent;
-    }
-
-    .squircle-3d {
-      background: var(--surface-3d);
-      border-radius: 28px;
-      box-shadow: var(--shadow-3d-lg);
-      border: 1px solid rgba(255, 255, 255, 0.8);
-      transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.35s ease;
-    }
-
-    .card-3d {
-      background: linear-gradient(145deg, #ffffff, #edf2f9);
-      border-radius: 24px;
-      box-shadow: var(--shadow-3d-md);
-      border: 1px solid rgba(255, 255, 255, 0.9);
-      transition: transform 0.25s ease, box-shadow 0.25s ease;
-    }
-
-    .card-3d:hover {
-      transform: translateY(-4px);
-    }
-
-    .input-3d {
-      background: #e9eff7;
-      box-shadow: var(--shadow-3d-inset);
-      border-radius: 16px;
-      border: 1px solid rgba(255, 255, 255, 0.7);
-      outline: none;
-      transition: all 0.2s ease;
-    }
-
-    .input-3d:focus {
-      background: #f4f7fc;
-      box-shadow: inset 3px 3px 6px #cfd8e6, inset -3px -3px 6px #ffffff, 0 0 0 2px #8b5cf6;
-    }
-
-    .btn-3d-iridescent {
-      background: var(--iridescent-grad);
-      color: white;
-      border-radius: 18px;
-      box-shadow: 0 10px 20px -5px rgba(139, 92, 246, 0.45), inset 0 2px 2px rgba(255, 255, 255, 0.5);
-      transition: all 0.2s ease;
-    }
-
-    .btn-3d-iridescent:active {
-      transform: scale(0.97);
-    }
-
-    .btn-3d-silver {
-      background: linear-gradient(145deg, #ffffff, #e2e8f0);
-      color: #1e293b;
-      border-radius: 16px;
-      box-shadow: 5px 5px 12px #cfd7e3, -5px -5px 12px #ffffff, inset 0 1px 1px #ffffff;
-      border: 1px solid rgba(255, 255, 255, 0.85);
-      transition: all 0.2s ease;
-    }
-
-    .btn-3d-silver:active {
-      box-shadow: var(--shadow-3d-inset);
-      transform: scale(0.98);
-    }
-
-    .text-metallic {
-      background: linear-gradient(180deg, #334155 0%, #0f172a 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-
-    .text-iridescent {
-      background: var(--iridescent-grad);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-
-    .logo-frame-3d {
-      border-radius: 22px;
-      background: linear-gradient(145deg, #ffffff, #e2e8f0);
-      padding: 4px;
-      box-shadow: 6px 6px 14px #cbd5e1, -6px -6px 14px #ffffff;
-    }
+    body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: var(--bg-studio); color: #1e293b; overflow-x: hidden; }
+    .squircle-3d { background: var(--surface-3d); border-radius: 26px; box-shadow: var(--shadow-3d-lg); border: 1px solid rgba(255,255,255,0.85); }
+    .card-3d { background: linear-gradient(145deg, #ffffff, #edf2f9); border-radius: 22px; box-shadow: var(--shadow-3d-md); border: 1px solid rgba(255,255,255,0.9); }
+    .input-3d { background: #e9eff7; box-shadow: var(--shadow-3d-inset); border-radius: 14px; border: 1px solid rgba(255,255,255,0.7); outline: none; }
+    .input-3d:focus { background: #f4f7fc; box-shadow: var(--shadow-3d-inset), 0 0 0 2px #8b5cf6; }
+    .btn-3d-iridescent { background: var(--iridescent-grad); color: white; border-radius: 16px; box-shadow: 0 8px 18px -4px rgba(139, 92, 246, 0.45); }
+    .btn-3d-silver { background: linear-gradient(145deg, #ffffff, #e2e8f0); color: #1e293b; border-radius: 14px; box-shadow: 4px 4px 10px #cfd7e3, -4px -4px 10px #ffffff; border: 1px solid rgba(255,255,255,0.9); }
+    .text-metallic { background: linear-gradient(180deg, #334155 0%, #0f172a 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .text-iridescent { background: var(--iridescent-grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .logo-frame-3d { border-radius: 20px; background: linear-gradient(145deg, #ffffff, #e2e8f0); padding: 4px; box-shadow: 5px 5px 12px #cbd5e1, -5px -5px 12px #ffffff; }
   </style>
 </head>
 <body class="min-h-screen flex flex-col">
 
   <!-- TOP NAVIGATION -->
-  <header class="sticky top-0 z-40 px-4 py-3 backdrop-blur-md bg-[#eef2f7]/85 border-b border-white/60">
+  <header class="sticky top-0 z-40 px-4 py-3 backdrop-blur-md bg-[#eef2f7]/90 border-b border-white/70">
     <div class="max-w-7xl mx-auto flex items-center justify-between">
       <div class="flex items-center gap-3 cursor-pointer" onclick="switchView('public')">
-        <div class="logo-frame-3d w-12 h-12 flex items-center justify-center overflow-hidden">
-          <img src="49465.jpg" alt="KETLO TRAVEL" class="app-logo-img w-full h-full object-cover rounded-[18px]"
+        <div class="logo-frame-3d w-11 h-11 flex items-center justify-center overflow-hidden">
+          <img src="49465.jpg" alt="KETLO TRAVEL" class="app-logo-img w-full h-full object-cover rounded-[16px]"
                onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-          <div class="hidden w-full h-full rounded-[18px] bg-gradient-to-tr from-amber-500 via-pink-500 to-sky-600 items-center justify-center text-white font-extrabold text-lg">KT</div>
+          <div class="hidden w-full h-full rounded-[16px] bg-gradient-to-tr from-amber-500 via-pink-500 to-sky-600 items-center justify-center text-white font-extrabold text-base">KT</div>
         </div>
         <div>
-          <h1 class="text-xl font-extrabold tracking-tight text-metallic leading-none">KETLO TRAVEL</h1>
-          <p class="text-[11px] font-semibold text-iridescent tracking-wider uppercase mt-0.5">Sri Lanka 3D Tours</p>
+          <h1 class="text-lg font-extrabold tracking-tight text-metallic leading-none">KETLO TRAVEL</h1>
+          <p class="text-[10px] font-bold text-iridescent tracking-wider uppercase mt-0.5">Sri Lanka 3D Tours</p>
         </div>
       </div>
 
-      <div class="flex items-center gap-2.5">
-        <span class="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold bg-white/80 text-emerald-700 shadow-sm">
-          <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span> Live Cloud Sync
+      <div class="flex items-center gap-2">
+        <span id="syncStatusBadge" class="px-2.5 py-1 rounded-full text-[10px] font-bold bg-white text-slate-600 shadow-sm">
+          ● Ready
         </span>
-        <button onclick="openAdminGate()" class="btn-3d-silver px-4 py-2 text-xs sm:text-sm font-bold flex items-center gap-2">
-          <svg class="w-4 h-4 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
+        <button onclick="openAdminGate()" class="btn-3d-silver px-3.5 py-2 text-xs font-bold flex items-center gap-1.5">
+          <span>🔒</span>
           <span id="navAdminLabel">Admin Login</span>
         </button>
       </div>
@@ -134,193 +61,187 @@
   </header>
 
   <!-- PUBLIC TOURIST VIEW -->
-  <main id="publicView" class="flex-1 max-w-7xl w-full mx-auto px-4 py-6 space-y-8">
-    <section class="squircle-3d p-6 sm:p-10 relative overflow-hidden">
-      <div class="grid md:grid-cols-12 gap-8 items-center">
-        <div class="md:col-span-7 space-y-4">
-          <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/90 shadow-sm text-xs font-bold text-slate-700">
-            <span>🇱🇰</span> Pearl of the Indian Ocean • Instant Online Booking
+  <main id="publicView" class="flex-1 max-w-7xl w-full mx-auto px-4 py-5 space-y-6">
+    <section class="squircle-3d p-6 sm:p-8">
+      <div class="grid md:grid-cols-12 gap-6 items-center">
+        <div class="md:col-span-7 space-y-3">
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white shadow-sm text-[11px] font-bold text-slate-700">
+            <span>🇱🇰</span> Sri Lanka Luxury Tours & Instant Booking
           </div>
-          <h2 class="text-3xl sm:text-5xl font-extrabold text-metallic leading-tight">
+          <h2 class="text-2xl sm:text-4xl font-extrabold text-metallic leading-tight">
             Explore Sri Lanka with <span class="text-iridescent">KETLO TRAVEL</span>
           </h2>
-          <p class="text-slate-600 text-sm sm:text-base leading-relaxed">
-            Discover Sigiriya, Ella, Yala Wildlife Safaris, and Southern Beaches with private luxury transport, verified local guides, and 24/7 live support.
+          <p class="text-slate-600 text-xs sm:text-sm leading-relaxed">
+            Sigiriya, Ella, Yala Wildlife Safaris & Southern Beaches with private A/C vehicles and 24/7 live customer support.
           </p>
-          <div class="flex flex-wrap gap-3 pt-2">
-            <a href="#destinationsGrid" class="btn-3d-iridescent px-6 py-3.5 font-bold text-sm">Explore Tour Packages</a>
-            <button onclick="toggleChat(true)" class="btn-3d-silver px-6 py-3.5 font-bold text-sm text-slate-700">💬 Chat with Us</button>
+          <div class="flex flex-wrap gap-2.5 pt-2">
+            <a href="#destinationsGrid" class="btn-3d-iridescent px-5 py-3 font-bold text-xs">Explore Tours</a>
+            <button onclick="toggleChat(true)" class="btn-3d-silver px-5 py-3 font-bold text-xs text-slate-700">💬 Live Chat</button>
           </div>
         </div>
         <div class="md:col-span-5 flex justify-center">
-          <div class="squircle-3d p-4 w-56 h-56 sm:w-64 sm:h-64 flex items-center justify-center">
-            <img src="49465.jpg" alt="KETLO TRAVEL 3D Logo" class="app-logo-img w-full h-full object-cover rounded-[22px] shadow-lg"
+          <div class="squircle-3d p-3 w-44 h-44 sm:w-52 sm:h-52 flex items-center justify-center">
+            <img src="49465.jpg" alt="KETLO TRAVEL" class="app-logo-img w-full h-full object-cover rounded-[20px] shadow-md"
                  onerror="this.style.display='none';">
           </div>
         </div>
       </div>
     </section>
 
-    <!-- Search & Region Filter -->
-    <section class="flex flex-col sm:flex-row gap-3 items-stretch sm:items-center justify-between">
+    <!-- Search & Filter -->
+    <section class="flex flex-col sm:flex-row gap-2.5">
       <input type="text" id="searchInput" oninput="renderTours()" placeholder="🔍 Search Sigiriya, Ella, Yala, Kandy..."
-             class="input-3d px-4 py-3 text-sm font-medium flex-1">
+             class="input-3d px-4 py-2.5 text-xs font-medium flex-1">
       <div class="flex gap-2 overflow-x-auto pb-1">
-        <button onclick="setRegion('All')" class="region-btn btn-3d-iridescent px-4 py-2.5 text-xs font-bold whitespace-nowrap" data-region="All">All Sri Lanka</button>
-        <button onclick="setRegion('Cultural Triangle')" class="region-btn btn-3d-silver px-4 py-2.5 text-xs font-bold whitespace-nowrap" data-region="Cultural Triangle">Cultural</button>
-        <button onclick="setRegion('Hill Country')" class="region-btn btn-3d-silver px-4 py-2.5 text-xs font-bold whitespace-nowrap" data-region="Hill Country">Hill Country</button>
-        <button onclick="setRegion('South Coast & Wildlife')" class="region-btn btn-3d-silver px-4 py-2.5 text-xs font-bold whitespace-nowrap" data-region="South Coast & Wildlife">Beach & Safari</button>
+        <button onclick="setRegion('All')" class="region-btn btn-3d-iridescent px-3.5 py-2 text-xs font-bold whitespace-nowrap" data-region="All">All</button>
+        <button onclick="setRegion('Cultural Triangle')" class="region-btn btn-3d-silver px-3.5 py-2 text-xs font-bold whitespace-nowrap" data-region="Cultural Triangle">Cultural</button>
+        <button onclick="setRegion('Hill Country')" class="region-btn btn-3d-silver px-3.5 py-2 text-xs font-bold whitespace-nowrap" data-region="Hill Country">Hill Country</button>
+        <button onclick="setRegion('South Coast & Wildlife')" class="region-btn btn-3d-silver px-3.5 py-2 text-xs font-bold whitespace-nowrap" data-region="South Coast & Wildlife">Beach & Safari</button>
       </div>
     </section>
 
     <!-- Destinations Grid -->
-    <section id="destinationsGrid" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6"></section>
+    <section id="destinationsGrid" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5"></section>
   </main>
 
   <!-- ADMIN PANEL VIEW -->
-  <main id="adminView" class="hidden flex-1 max-w-7xl w-full mx-auto px-4 py-6 space-y-6">
-    <div class="squircle-3d p-5 flex flex-wrap items-center justify-between gap-4">
+  <main id="adminView" class="hidden flex-1 max-w-7xl w-full mx-auto px-4 py-5 space-y-5">
+    <div class="squircle-3d p-4 flex flex-wrap items-center justify-between gap-3">
       <div>
-        <h2 class="text-2xl font-extrabold text-metallic">KETLO TRAVEL Admin Control</h2>
-        <p class="text-xs font-semibold text-slate-500">Logged in as: <span class="text-purple-600 font-bold">ketlotravel@gmail.com</span></p>
+        <h2 class="text-xl font-extrabold text-metallic">KETLO TRAVEL Admin Panel</h2>
+        <p class="text-[11px] font-semibold text-slate-500">Admin: <span class="text-purple-600 font-bold">ketlotravel@gmail.com</span></p>
       </div>
       <div class="flex gap-2">
-        <button onclick="switchView('public')" class="btn-3d-silver px-4 py-2 text-xs font-bold">View Public App</button>
-        <button onclick="adminLogout()" class="px-4 py-2 rounded-2xl bg-rose-500 text-white text-xs font-bold shadow-md">Logout</button>
+        <button onclick="switchView('public')" class="btn-3d-silver px-3.5 py-2 text-xs font-bold">Public App</button>
+        <button onclick="adminLogout()" class="px-3.5 py-2 rounded-xl bg-rose-500 text-white text-xs font-bold shadow">Logout</button>
       </div>
     </div>
 
     <!-- Admin Tabs -->
     <div class="flex gap-2 overflow-x-auto pb-1">
-      <button onclick="switchAdminTab('bookings')" id="tabBtn-bookings" class="admin-tab btn-3d-iridescent px-4 py-2.5 text-xs font-bold whitespace-nowrap">📅 Bookings (<span id="bookingCount">0</span>)</button>
-      <button onclick="switchAdminTab('locations')" id="tabBtn-locations" class="admin-tab btn-3d-silver px-4 py-2.5 text-xs font-bold whitespace-nowrap">📍 Add / Manage Locations</button>
-      <button onclick="switchAdminTab('chat')" id="tabBtn-chat" class="admin-tab btn-3d-silver px-4 py-2.5 text-xs font-bold whitespace-nowrap">💬 Live Chat Inbox</button>
-      <button onclick="switchAdminTab('brand')" id="tabBtn-brand" class="admin-tab btn-3d-silver px-4 py-2.5 text-xs font-bold whitespace-nowrap">🎨 Logo & Brand</button>
+      <button onclick="switchAdminTab('bookings')" id="tabBtn-bookings" class="admin-tab btn-3d-iridescent px-4 py-2 text-xs font-bold whitespace-nowrap">📅 Bookings (<span id="bookingCount">0</span>)</button>
+      <button onclick="switchAdminTab('locations')" id="tabBtn-locations" class="admin-tab btn-3d-silver px-4 py-2 text-xs font-bold whitespace-nowrap">📍 Locations</button>
+      <button onclick="switchAdminTab('chat')" id="tabBtn-chat" class="admin-tab btn-3d-silver px-4 py-2 text-xs font-bold whitespace-nowrap">💬 Live Chat (<span id="chatCount">0</span>)</button>
+      <button onclick="switchAdminTab('brand')" id="tabBtn-brand" class="admin-tab btn-3d-silver px-4 py-2 text-xs font-bold whitespace-nowrap">🎨 Logo</button>
     </div>
 
     <!-- Tab 1: Bookings -->
-    <section id="adminTab-bookings" class="space-y-4">
+    <section id="adminTab-bookings" class="space-y-3">
       <div id="adminBookingsList" class="grid md:grid-cols-2 gap-4"></div>
     </section>
 
     <!-- Tab 2: Manage Locations -->
-    <section id="adminTab-locations" class="hidden space-y-6">
-      <form onsubmit="handleAddTour(event)" class="squircle-3d p-6 grid sm:grid-cols-2 gap-4">
-        <h3 class="sm:col-span-2 text-lg font-extrabold text-metallic">+ Add New Sri Lanka Destination</h3>
-        <input type="text" id="newTourTitle" required placeholder="Location Name (e.g., Trincomalee Pigeon Island)" class="input-3d px-4 py-3 text-sm">
-        <select id="newTourRegion" class="input-3d px-4 py-3 text-sm">
+    <section id="adminTab-locations" class="hidden space-y-5">
+      <form onsubmit="handleAddTour(event)" class="squircle-3d p-5 grid sm:grid-cols-2 gap-3">
+        <h3 class="sm:col-span-2 text-base font-extrabold text-metallic">+ Add Sri Lanka Destination</h3>
+        <input type="text" id="newTourTitle" required placeholder="Location Name (e.g., Trincomalee)" class="input-3d px-3.5 py-2.5 text-xs">
+        <select id="newTourRegion" class="input-3d px-3.5 py-2.5 text-xs">
           <option value="Cultural Triangle">Cultural Triangle</option>
           <option value="Hill Country">Hill Country</option>
           <option value="South Coast & Wildlife">South Coast & Wildlife</option>
         </select>
-        <input type="number" id="newTourPrice" required placeholder="Price per Person (USD)" class="input-3d px-4 py-3 text-sm">
-        <input type="text" id="newTourDuration" required placeholder="Duration (e.g., 2 Days / 1 Night)" class="input-3d px-4 py-3 text-sm">
-        <input type="url" id="newTourImage" required placeholder="Image URL (https://...)" class="input-3d px-4 py-3 text-sm sm:col-span-2">
-        <textarea id="newTourDesc" required rows="2" placeholder="Highlights & Tour Details..." class="input-3d px-4 py-3 text-sm sm:col-span-2"></textarea>
-        <button type="submit" class="btn-3d-iridescent py-3.5 font-bold text-sm sm:col-span-2">Publish Destination Live</button>
+        <input type="number" id="newTourPrice" required placeholder="Price per Person (USD)" class="input-3d px-3.5 py-2.5 text-xs">
+        <input type="text" id="newTourDuration" required placeholder="Duration (e.g., 2 Days)" class="input-3d px-3.5 py-2.5 text-xs">
+        <input type="url" id="newTourImage" required placeholder="Image URL (https://...)" class="input-3d px-3.5 py-2.5 text-xs sm:col-span-2">
+        <textarea id="newTourDesc" required rows="2" placeholder="Tour Description..." class="input-3d px-3.5 py-2.5 text-xs sm:col-span-2"></textarea>
+        <button type="submit" class="btn-3d-iridescent py-3 font-bold text-xs sm:col-span-2">Add Location</button>
       </form>
-      <div id="adminToursList" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4"></div>
+      <div id="adminToursList" class="grid sm:grid-cols-2 gap-3"></div>
     </section>
 
     <!-- Tab 3: Live Chat Inbox -->
-    <section id="adminTab-chat" class="hidden squircle-3d p-6 space-y-4">
-      <h3 class="text-lg font-extrabold text-metallic">Real-Time Tourist Live Chat</h3>
-      <div id="adminChatFeed" class="h-80 overflow-y-auto space-y-3 p-4 rounded-2xl bg-[#e6ecf5] shadow-inner"></div>
+    <section id="adminTab-chat" class="hidden squircle-3d p-5 space-y-3">
+      <h3 class="text-base font-extrabold text-metallic">Live Chat Messages</h3>
+      <div id="adminChatFeed" class="h-72 overflow-y-auto space-y-2.5 p-3 rounded-2xl bg-[#e6ecf5] shadow-inner"></div>
       <form onsubmit="sendChatMessage(event, 'admin')" class="flex gap-2">
-        <input type="text" id="adminChatInput" required placeholder="Reply as KETLO TRAVEL Admin..." class="input-3d flex-1 px-4 py-3 text-sm">
-        <button type="submit" class="btn-3d-iridescent px-6 py-3 font-bold text-sm">Send Reply</button>
+        <input type="text" id="adminChatInput" required placeholder="Reply as KETLO Admin..." class="input-3d flex-1 px-3.5 py-2.5 text-xs">
+        <button type="submit" class="btn-3d-iridescent px-5 py-2.5 font-bold text-xs">Send</button>
       </form>
     </section>
 
-    <!-- Tab 4: Logo & Brand -->
-    <section id="adminTab-brand" class="hidden squircle-3d p-6 space-y-4">
-      <h3 class="text-lg font-extrabold text-metallic">Update App 3D Logo</h3>
-      <p class="text-xs text-slate-600">Select a new logo image to preview across the app.</p>
-      <input type="file" accept="image/*" onchange="handleLogoUpload(event)" class="input-3d p-3 text-sm w-full">
+    <!-- Tab 4: Logo -->
+    <section id="adminTab-brand" class="hidden squircle-3d p-5 space-y-3">
+      <h3 class="text-base font-extrabold text-metallic">Update 3D Logo</h3>
+      <input type="file" accept="image/*" onchange="handleLogoUpload(event)" class="input-3d p-3 text-xs w-full">
     </section>
   </main>
 
   <!-- BOOKING MODAL -->
   <div id="bookingModal" class="hidden fixed inset-0 z-50 bg-slate-900/50 backdrop-blur-sm flex items-center justify-center p-4">
-    <div class="squircle-3d max-w-md w-full p-6 space-y-4 relative">
-      <button onclick="closeBookingModal()" class="absolute top-4 right-4 w-8 h-8 rounded-full bg-white shadow font-bold text-slate-600">✕</button>
-      <h3 class="text-xl font-extrabold text-metallic">Book Sri Lanka Tour</h3>
-      <p id="modalTourName" class="text-sm font-bold text-iridescent"></p>
-      <form onsubmit="submitBooking(event)" class="space-y-3">
-        <input type="text" id="bookGuestName" required placeholder="Your Full Name" class="input-3d w-full px-4 py-3 text-sm">
-        <input type="email" id="bookGuestEmail" required placeholder="Email Address" class="input-3d w-full px-4 py-3 text-sm">
-        <input type="tel" id="bookGuestPhone" required placeholder="WhatsApp / Phone (+94...)" class="input-3d w-full px-4 py-3 text-sm">
-        <div class="grid grid-cols-2 gap-3">
-          <input type="date" id="bookDate" required class="input-3d w-full px-3 py-3 text-sm">
-          <input type="number" id="bookGuests" min="1" max="20" value="2" oninput="updateBookingTotal()" required class="input-3d w-full px-3 py-3 text-sm">
+    <div class="squircle-3d max-w-md w-full p-5 space-y-3 relative">
+      <button onclick="closeBookingModal()" class="absolute top-4 right-4 w-7 h-7 rounded-full bg-white shadow font-bold text-xs">✕</button>
+      <h3 class="text-lg font-extrabold text-metallic">Book Sri Lanka Tour</h3>
+      <p id="modalTourName" class="text-xs font-bold text-iridescent"></p>
+      <form onsubmit="submitBooking(event)" class="space-y-2.5">
+        <input type="text" id="bookGuestName" required placeholder="Full Name" class="input-3d w-full px-3.5 py-2.5 text-xs">
+        <input type="email" id="bookGuestEmail" required placeholder="Email Address" class="input-3d w-full px-3.5 py-2.5 text-xs">
+        <input type="tel" id="bookGuestPhone" required placeholder="WhatsApp / Phone" class="input-3d w-full px-3.5 py-2.5 text-xs">
+        <div class="grid grid-cols-2 gap-2.5">
+          <input type="date" id="bookDate" required class="input-3d w-full px-3 py-2.5 text-xs">
+          <input type="number" id="bookGuests" min="1" max="20" value="2" oninput="updateBookingTotal()" required class="input-3d w-full px-3 py-2.5 text-xs">
         </div>
-        <select id="bookTier" onchange="updateBookingTotal()" class="input-3d w-full px-4 py-3 text-sm">
+        <select id="bookTier" onchange="updateBookingTotal()" class="input-3d w-full px-3.5 py-2.5 text-xs">
           <option value="1">Standard A/C Private Vehicle (1x)</option>
-          <option value="1.4">VIP Luxury SUV & 5-Star Guide (1.4x)</option>
+          <option value="1.4">VIP Luxury SUV & Guide (1.4x)</option>
         </select>
-        <div class="p-3 rounded-2xl bg-white/80 flex justify-between items-center">
-          <span class="text-xs font-bold text-slate-500">Estimated Total:</span>
-          <span id="bookTotalDisplay" class="text-lg font-extrabold text-metallic">$0</span>
+        <div class="p-2.5 rounded-xl bg-white/80 flex justify-between items-center">
+          <span class="text-xs font-bold text-slate-500">Total:</span>
+          <span id="bookTotalDisplay" class="text-base font-extrabold text-metallic">$0</span>
         </div>
-        <button type="submit" class="btn-3d-iridescent w-full py-3.5 font-bold text-sm">Confirm Online Booking</button>
+        <button type="submit" class="btn-3d-iridescent w-full py-3 font-bold text-xs">Confirm Booking</button>
       </form>
     </div>
   </div>
 
   <!-- ADMIN LOGIN MODAL -->
   <div id="adminLoginModal" class="hidden fixed inset-0 z-50 bg-slate-900/50 backdrop-blur-sm flex items-center justify-center p-4">
-    <div class="squircle-3d max-w-sm w-full p-6 space-y-4 relative text-center">
-      <button onclick="closeAdminGate()" class="absolute top-4 right-4 w-8 h-8 rounded-full bg-white shadow font-bold text-slate-600">✕</button>
-      <div class="logo-frame-3d w-16 h-16 mx-auto overflow-hidden">
-        <img src="49465.jpg" alt="Logo" class="app-logo-img w-full h-full object-cover rounded-[18px]">
+    <div class="squircle-3d max-w-sm w-full p-6 space-y-3.5 relative text-center">
+      <button onclick="closeAdminGate()" class="absolute top-4 right-4 w-7 h-7 rounded-full bg-white shadow font-bold text-xs">✕</button>
+      <div class="logo-frame-3d w-14 h-14 mx-auto overflow-hidden">
+        <img src="49465.jpg" alt="Logo" class="app-logo-img w-full h-full object-cover rounded-[16px]">
       </div>
-      <h3 class="text-xl font-extrabold text-metallic">Admin Portal Login</h3>
-      <p class="text-xs text-slate-500">Authorized Access: ketlotravel@gmail.com</p>
+      <h3 class="text-lg font-extrabold text-metallic">Admin Portal Login</h3>
+      <p class="text-[11px] text-slate-500">Email: ketlotravel@gmail.com</p>
       <form onsubmit="handleAdminLogin(event)" class="space-y-3 text-left">
-        <input type="email" id="adminEmailInput" value="ketlotravel@gmail.com" required class="input-3d w-full px-4 py-3 text-sm">
-        <input type="password" id="adminPassInput" placeholder="Admin Password" required class="input-3d w-full px-4 py-3 text-sm">
-        <button type="submit" class="btn-3d-iridescent w-full py-3.5 font-bold text-sm">Sign In to Admin Panel</button>
+        <input type="email" id="adminEmailInput" value="ketlotravel@gmail.com" required class="input-3d w-full px-3.5 py-2.5 text-xs">
+        <input type="password" id="adminPassInput" placeholder="Enter Password (or Ketlo@2026)" required class="input-3d w-full px-3.5 py-2.5 text-xs">
+        <button type="submit" class="btn-3d-iridescent w-full py-3 font-bold text-xs">Sign In to Admin Panel</button>
       </form>
     </div>
   </div>
 
   <!-- FLOATING LIVE CHAT WIDGET -->
-  <div class="fixed bottom-5 right-5 z-40">
-    <div id="chatBoxWindow" class="hidden squircle-3d w-80 sm:w-96 mb-3 overflow-hidden flex flex-col">
-      <div class="p-4 text-white flex items-center justify-between" style="background: var(--iridescent-grad);">
-        <div class="flex items-center gap-2.5">
-          <img src="49465.jpg" class="app-logo-img w-9 h-9 rounded-xl object-cover bg-white">
+  <div class="fixed bottom-4 right-4 z-40">
+    <div id="chatBoxWindow" class="hidden squircle-3d w-80 mb-3 overflow-hidden flex flex-col shadow-2xl">
+      <div class="p-3.5 text-white flex items-center justify-between" style="background: var(--iridescent-grad);">
+        <div class="flex items-center gap-2">
+          <img src="49465.jpg" class="app-logo-img w-8 h-8 rounded-lg object-cover bg-white">
           <div>
-            <h4 class="font-extrabold text-sm leading-none">KETLO Live Support</h4>
-            <span class="text-[11px] opacity-90">Online • Replies instantly</span>
+            <h4 class="font-extrabold text-xs leading-none">KETLO Live Chat</h4>
+            <span class="text-[10px] opacity-90">Online • Ask anything</span>
           </div>
         </div>
-        <button onclick="toggleChat(false)" class="text-white font-bold text-lg">✕</button>
+        <button onclick="toggleChat(false)" class="text-white font-bold text-base">✕</button>
       </div>
-      <div id="publicChatFeed" class="h-64 overflow-y-auto p-3 space-y-2.5 bg-[#eef2f7]"></div>
-      <form onsubmit="sendChatMessage(event, 'tourist')" class="p-3 bg-white/90 flex gap-2">
-        <input type="text" id="publicChatInput" required placeholder="Ask about Sri Lanka tours..." class="input-3d flex-1 px-3 py-2 text-xs">
-        <button type="submit" class="btn-3d-iridescent px-4 py-2 text-xs font-bold">Send</button>
+      <div id="publicChatFeed" class="h-60 overflow-y-auto p-3 space-y-2 bg-[#eef2f7]"></div>
+      <form onsubmit="sendChatMessage(event, 'tourist')" class="p-2.5 bg-white flex gap-2">
+        <input type="text" id="publicChatInput" required placeholder="Type a message..." class="input-3d flex-1 px-3 py-2 text-xs">
+        <button type="submit" class="btn-3d-iridescent px-3.5 py-2 text-xs font-bold">Send</button>
       </form>
     </div>
-    <button onclick="toggleChat()" class="btn-3d-iridescent ml-auto px-5 py-3.5 rounded-full font-extrabold text-sm flex items-center gap-2 shadow-xl">
+    <button onclick="toggleChat()" class="btn-3d-iridescent ml-auto px-4 py-3 rounded-full font-extrabold text-xs flex items-center gap-2 shadow-xl">
       <span>💬</span> Live Chat
     </button>
   </div>
 
   <!-- FOOTER -->
-  <footer class="mt-12 py-6 px-4 border-t border-white/70 text-center text-xs text-slate-500">
-    <p class="font-bold text-slate-700">KETLO TRAVEL Sri Lanka • Official Contact: ketlotravel@gmail.com</p>
+  <footer class="mt-10 py-5 px-4 border-t border-white/70 text-center text-[11px] text-slate-500">
+    <p class="font-bold text-slate-700">KETLO TRAVEL Sri Lanka • ketlotravel@gmail.com</p>
   </footer>
 
-  <!-- FIREBASE REAL-TIME SDK & APP LOGIC -->
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-    import { getFirestore, collection, addDoc, onSnapshot, query, orderBy, doc, updateDoc, deleteDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-    import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-
+  <script>
     // =========================================================================
-    // PASTE YOUR FIREBASE CONFIG OBJECT BELOW:
+    // PASTE YOUR FIREBASE CONFIG BELOW (Optional - Works Offline & Online!)
     // =========================================================================
     const firebaseConfig = {
       apiKey: "PASTE_YOUR_API_KEY",
@@ -331,12 +252,52 @@
       appId: "PASTE_YOUR_APP_ID"
     };
 
-    const app = initializeApp(firebaseConfig);
-    const db = getFirestore(app);
-    const auth = getAuth(app);
+    const isFirebaseConfigured = firebaseConfig.apiKey && !firebaseConfig.apiKey.includes("PASTE_YOUR");
+    let db = null, auth = null;
+
+    if (isFirebaseConfigured && window.firebase) {
+      try {
+        firebase.initializeApp(firebaseConfig);
+        db = firebase.firestore();
+        auth = firebase.auth();
+        document.getElementById('syncStatusBadge').innerHTML = '<span class="text-emerald-600">● Cloud Live</span>';
+      } catch (e) {
+        console.warn("Firebase init fallback to local mode:", e);
+      }
+    } else {
+      document.getElementById('syncStatusBadge').innerHTML = '<span class="text-amber-600">● Instant Mode</span>';
+    }
 
     const defaultTours = [
-      { id: '1', title: 'Sigiriya Lion Rock & Dambulla', region: 'Cultural Triangle', price: 95, duration: '1 Day', image: 'https://images.unsplash.com/photo-1588598198321-9735fd52455b?auto=format&fit=crop&w=800&q=80', desc: 'Climb the 5th-century UNESCO rock fortress and explore ancient golden cave temples.' },
-      { id: '2', title: 'Ella & Nine Arch Bridge Express', region: 'Hill Country', price: 140, duration: '2 Days / 1 Night', image: 'https://images.unsplash.com/photo-1546708973-b339540b5162?auto=format&fit=crop&w=800&q=80', desc: 'Scenic hill-country train ride, Little Adam’s Peak sunrise, and misty tea plantations.' },
+      { id: '1', title: 'Sigiriya Lion Rock & Dambulla', region: 'Cultural Triangle', price: 95, duration: '1 Day', image: 'https://images.unsplash.com/photo-1588598198321-9735fd52455b?auto=format&fit=crop&w=800&q=80', desc: 'Climb the 5th-century UNESCO rock fortress and explore golden cave temples.' },
+      { id: '2', title: 'Ella & Nine Arch Bridge Express', region: 'Hill Country', price: 140, duration: '2 Days / 1 Night', image: 'https://images.unsplash.com/photo-1546708973-b339540b5162?auto=format&fit=crop&w=800&q=80', desc: 'Scenic hill-country train ride, Little Adam’s Peak sunrise, and tea plantations.' },
       { id: '3', title: 'Yala National Park Leopard Safari', region: 'South Coast & Wildlife', price: 120, duration: '1 Day', image: 'https://images.unsplash.com/photo-1534759846116-5799c33ce22a?auto=format&fit=crop&w=800&q=80', desc: '4x4 luxury jeep safari spotting Sri Lankan leopards, elephants, and sloth bears.' },
-      { id: '4', title: 'Mirissa Whales & Galle Dutch Fort', region: 'South Coast & Wildlife', price: 110, duration: '1 Day', image: 'https://images.unsplash.com/photo-1552465011-b4e21bf6e79a?auto=format&fit=crop
+      { id: '4', title: 'Mirissa Whales & Galle Dutch Fort', region: 'South Coast & Wildlife', price: 110, duration: '1 Day', image: 'https://images.unsplash.com/photo-1552465011-b4e21bf6e79a?auto=format&fit=crop&w=800&q=80', desc: 'Blue whale watching excursion followed by sunset walk along Galle Fort ramparts.' }
+    ];
+
+    let tours = JSON.parse(localStorage.getItem('ketlo_tours')) || defaultTours;
+    let bookings = JSON.parse(localStorage.getItem('ketlo_bookings')) || [];
+    let chats = JSON.parse(localStorage.getItem('ketlo_chats')) || [
+      { sender: 'admin', text: 'Ayubowan! Welcome to KETLO TRAVEL Sri Lanka. How can we help you plan your tour?' }
+    ];
+    let currentRegion = 'All';
+    let selectedTour = null;
+    let isAdminLoggedIn = localStorage.getItem('ketlo_admin') === 'true';
+
+    // Real-time Cloud Sync if Firebase is configured
+    if (db) {
+      db.collection("tours").onSnapshot(snap => {
+        if (!snap.empty) {
+          tours = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+          renderTours(); renderAdminTours();
+        }
+      });
+      db.collection("bookings").orderBy("timestamp", "desc").onSnapshot(snap => {
+        bookings = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+        renderBookings();
+      });
+      db.collection("chats").orderBy("timestamp", "asc").onSnapshot(snap => {
+        if (!snap.empty) {
+          chats = snap.docs.map(d => d.data());
+          renderChats();
+   
