@@ -1,1 +1,9 @@
+{
+  "appId": "com.ketlotravel.app",
+  "appName": "KETLO TRAVEL",
+  "webDir": "www",
+  "server": {
+    "androidScheme": "https"
+  }
+}
 
